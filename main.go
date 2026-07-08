@@ -7,20 +7,17 @@ import (
 	"time"
 )
 
-// Job — задание на обработку URL
 type Job struct {
 	ID  int
 	URL string
 }
 
-// Result — результат обработки задания
 type Result struct {
 	Job      Job
 	Status   string
 	Duration time.Duration
 }
 
-// worker — функция-воркер, обрабатывает задания из канала jobs и пишет результаты в results
 func worker(jobs <-chan Job, results chan<- Result, wg *sync.WaitGroup) {
 	defer wg.Done()
 
@@ -30,7 +27,6 @@ func worker(jobs <-chan Job, results chan<- Result, wg *sync.WaitGroup) {
 	}
 }
 
-// processJob — имитирует HTTP-запрос и замеряет время
 func processJob(job Job) Result {
 	start := time.Now()
 
@@ -45,7 +41,6 @@ func processJob(job Job) Result {
 	}
 }
 
-// report — выводит агрегированный отчёт
 func report(results []Result) {
 	fmt.Println("--- Итоговый отчёт ---")
 
